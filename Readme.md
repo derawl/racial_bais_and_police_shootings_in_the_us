@@ -6,9 +6,10 @@ washington post. The data is third party data and even though
 there is little or no evidence to doubt its accuracy it should be noted.
 
 **Installation Requirements**
+- numpy >= 1.20.0
 - Python >= 3.9
 - bs4(BeautifulSoup) >= 0.0.1
--pandas >= 1.3.1
+- pandas >= 1.3.1
 
 *For visualization only*
 - dash >= 1.21.0
@@ -45,7 +46,7 @@ you can learn how to add python to path here:
 Once you run the application you should see 
 ```commandline
 Dash is running on http://127.0.0.1:8050/
- * Serving Flask app "main" (lazy loading)
+ * Serving Flask app "main" 
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.
    Use a production WSGI server instead.
