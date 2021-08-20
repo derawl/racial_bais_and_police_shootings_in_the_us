@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/Fatal_Force/Deaths_by_Police_US.csv" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/Fatal_Force/Median_Household_Income_2015.csv" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/Fatal_Force/Pct_Over_25_Completed_High_School.csv" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/Fatal_Force/Pct_People_Below_Poverty_Level.csv" charset="windows-1252" />
+  </component>
+</project>
