@@ -1,8 +1,6 @@
 import numpy as np
 import pandas as pd
 import plotly.express as px
-import matplotlib.pyplot as plt
-import math
 import plotly.graph_objs as go
 
 #Dash import
@@ -222,7 +220,6 @@ fig3 = px.pie(race_sorted_deaths, values='Comparative proportions of population 
 poverty = px.scatter(deaths_per_state_poverty_levels, x='poverty_rate',  y=['death rate'])
 median_income_fig = px.scatter(combined_median_income, x='rate_of_median_income',  y=['rate_of_deaths'])
 hs_fig = px.scatter(hs_vs_deaths, x='completion_rate',  y=['death_rate'])
-threat_fig = px.bar(threats, x=threats.index,  y=['attack', 'other', 'undermined'])
 
 
 details = html.Div(children=[
@@ -392,12 +389,7 @@ title = html.H1(
 )
 
 attacks = html.Div(children=[
-    html.Div(children=[
-        dcc.Graph(
-            id='Threats',
-            figure=threats
-        )
-    ])
+
 ])
 app.layout = html.Div(id='main_div', children=[title, details, Graphs_poverty, Graphs, attacks], style = {'background-color': '#FFFFFF', 'padding':'0',
          'width':'100%', 'height':'100%'}
