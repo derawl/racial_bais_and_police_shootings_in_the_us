@@ -1,6 +1,6 @@
-##Racial Bais and Police caused in the USA
+## Racial Bais and Police caused in the USA
 
-####Disclaimer:
+#### Disclaimer:
 The data used in for this analysis was sourced from the
 washington post. The data is third party data and even though
 there is little or no evidence to doubt its accuracy it should be noted.

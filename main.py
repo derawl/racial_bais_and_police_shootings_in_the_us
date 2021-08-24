@@ -35,11 +35,33 @@ race_proportion_per_city.dropna(inplace=True)
 race_proportion_per_city.drop_duplicates()
 
 
+#How attacks influenced the level of deaths
 das = deaths_by_police.groupby(['race', 'threat_level'], as_index=False)['id'].count()
 threats = das.pivot(index='race', columns='threat_level')
 threats.columns = threats.columns.droplevel(0)
 threats.replace(np.nan, 0, inplace=True)
-print(threats['attack'])
+
+threats['total'] = threats['attack']+threats['other']+threats['undetermined']
+threats['others'] = threats['other']+threats['undetermined']
+threats['per_attacks'] = (threats['attack'] / threats['total']) * 100
+threats['per_other'] = (threats['others'] / threats['total']) * 100
+
+#How attacks influenced the level of deaths
+flee = deaths_by_police.groupby(['race', 'flee'], as_index=False)['id'].count()
+fleeing = flee.pivot(index='race', columns='flee')
+fleeing.replace(np.nan, 0, inplace=True)
+
+#Victim was armed
+arm = deaths_by_police.groupby(['race', 'armed'], as_index=False)['id'].count()
+armed = arm.pivot(index='race', columns='armed')
+armed.columns = armed.columns.droplevel(0)
+armed['unarmed_p'] = armed['unarmed']
+armed.replace(np.nan, 0, inplace=True)
+
+print(armed.columns)
+
+
+
 ##Formatted the date column to a proper format in the deaths_by_police dataframe
 deaths_by_police['date'] = pd.to_datetime(deaths_by_police['date'])
 
@@ -210,16 +232,17 @@ race_sorted_deaths = pd.DataFrame({'Races': races, 'Population': pop_proportion,
 
 
 # visualizations and reporting
-figure = px.bar(race_sorted_deaths, x='Races', y='Comparative proportions of population deaths')
+figure = px.bar(race_sorted_deaths, color='Races', x='Races', y='Comparative proportions of population deaths')
 race_composition = px.bar(race_sorted_deaths, x='Races', y=['Population'], title='Percentage US racial composition')
-race_shooting = px.bar(race_sorted_deaths, x='Races', y=['Deaths'], title='Average US racial Deaths')
+race_shooting = px.bar(race_sorted_deaths, x='Races', y=['Deaths'], color='Races', title='Average US racial Deaths')
 
-fig3 = px.pie(race_sorted_deaths, values='Comparative proportions of population deaths', names='Races',
+fig3 = px.pie(race_sorted_deaths, color='Races', values='Comparative proportions of population deaths', names='Races',
               title='Proportionate percentage of deaths caused by police shootings to racial populations in the USA')
 
 poverty = px.scatter(deaths_per_state_poverty_levels, x='poverty_rate',  y=['death rate'])
 median_income_fig = px.scatter(combined_median_income, x='rate_of_median_income',  y=['rate_of_deaths'])
 hs_fig = px.scatter(hs_vs_deaths, x='completion_rate',  y=['death_rate'])
+attacks = px.bar(threats, x=threats.index, y=['per_other', 'per_attacks'])
 
 
 details = html.Div(children=[
@@ -389,6 +412,12 @@ title = html.H1(
 )
 
 attacks = html.Div(children=[
+
+    dcc.Graph(
+        id='Chartd',
+        figure=attacks
+
+    )
 
 ])
 app.layout = html.Div(id='main_div', children=[title, details, Graphs_poverty, Graphs, attacks], style = {'background-color': '#FFFFFF', 'padding':'0',
