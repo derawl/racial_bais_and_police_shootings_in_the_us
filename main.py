@@ -233,7 +233,7 @@ race_sorted_deaths = pd.DataFrame({'Races': races, 'Population': pop_proportion,
 
 # visualizations and reporting
 figure = px.bar(race_sorted_deaths, color='Races', x='Races', y='Comparative proportions of population deaths')
-race_composition = px.bar(race_sorted_deaths, x='Races', y=['Population'], title='Percentage US racial composition')
+race_composition = px.pie(race_sorted_deaths, color='Races', values='Population', names='Races', title='Percentage US racial composition')
 race_shooting = px.bar(race_sorted_deaths, x='Races', y=['Deaths'], color='Races', title='Average US racial Deaths')
 
 fig3 = px.pie(race_sorted_deaths, color='Races', values='Comparative proportions of population deaths', names='Races',
@@ -251,8 +251,8 @@ details = html.Div(children=[
         html.P(children=f'⚫ Average age of deaths: {int(mean_age_of_deaths)} years'),
         html.P(children=f'⚫ Median age of deaths: {int(median_age_of_deaths)} years'),
         html.P(children=f'⚫ Age with the highest frequency of death: {int(mode_age_of_deaths)} years'),
-        html.P(children=f'⚫ Maximum age of a person killed by police shooting {int(max_age_of_deaths)} years, Name: {name_of_max}, Race: White'),
-        html.P(children=f'⚫ Maximum age of a person killed by police shooting {int(min_age_of_deaths)} years, Name: {name_of_min}, Race: Hispanic'),
+        html.P(children=f'⚫ Oldest person killed by police shooting {int(max_age_of_deaths)} years, Name: {name_of_max}, Race: White'),
+        html.P(children=f'⚫ Youngest person killed by police shooting {int(min_age_of_deaths)} years, Name: {name_of_min}, Race: Hispanic'),
         html.P(children=f"⚫ Number of female deaths caused by police shootings: {gender_disparity_of_deaths['F']} people"),
         html.P(children=f"⚫ Number of male deaths caused by police shootings: {gender_disparity_of_deaths['M']} people"),
 
@@ -413,14 +413,48 @@ title = html.H1(
 
 attacks = html.Div(children=[
 
-    dcc.Graph(
-        id='Chartd',
-        figure=attacks
+    html.Div(
+        children=[
+        html.H4(children='Proportion of deaths as a result of an attack on the police'),
+        dcc.Graph(
+                id='Chartd',
+                figure=attacks
 
+            )
+        ],
+        style={'padding':'1rem 20rem 1rem 1rem'}
     )
 
 ])
-app.layout = html.Div(id='main_div', children=[title, details, Graphs_poverty, Graphs, attacks], style = {'background-color': '#FFFFFF', 'padding':'0',
+
+conclusion = html.Div(children=[
+
+    html.Div(
+        children=[
+        html.H2(children='Conclusion'),
+        html.P('Race as a motivator for police shootings in the USA is a highly debated topic. However, looking'
+               ' at the insights we have given this analysis. We can better understand what the facts really are'),
+        html.P(' - That all other races except native americans are more  likely to be shoot than whites'),
+        html.P(' - Those of the blacke race are indeed the most likely to be shot'),
+        html.P(' - Blacks have a high percentage of deaths as a result of an attack on the police but whites have'
+               'an even higher percentage. Meaning that they are not more violent than blacks'),
+        html.P(' - Poverty rates and House hold income has little to do with police shootings at the state level'),
+
+        html.H5('Summary'),
+        html.P('Given the above conclusions, a person race could account for a greater likely hood of being shot in a police encounter. Given'
+               ' that colored people(asians, blacks, and hispanics) are more likely to be shot when compared to white people. All other variables'
+               ' being the same.'
+               ' However, this does not denote the race as a cause but opens that up for reasonable questioning. Further social expriments'
+               ' better demonstrate how police respond more discriminatory towards colored people with a greater intensity on the'
+               ' darker skinned people. This conclusion is does not account for an important variable which is the proportion of criminals'
+               ' per racial population group. Further clarification is needed to us to be more certain.')
+
+        ],
+        style={'padding':'1rem 20rem 1rem 1rem'}
+    )
+
+], style={'padding':'8rem'})
+app.layout = html.Div(id='main_div', children=[title, details, Graphs_poverty, Graphs, attacks, conclusion], style = {'background-color': '#FFFFFF', 'padding':'0',
          'width':'100%', 'height':'100%'}
 )
 
