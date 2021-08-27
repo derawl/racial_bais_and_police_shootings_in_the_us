@@ -1,0 +1,18 @@
+html.Div(
+                className="six columns",
+                children=[
+                    html.H6(children='Over 25 High school completion Vs Police shootings'),
+                                    dcc.Graph(
+                                        id='High School',
+                                        figure=hs_fig
+                                    ),
+                html.H6(children=f'Correlation coeficient {round(hs_corr, 2)}'),
+                html.H6(children=f'Interpretation'),
+                html.P(children='The percentage of high school graduates over 25 moderately affects compared to the other variables Police Shootings. '
+                                'The correlation high is moderately weak and shows that  percentage of high school graduates over 25 years '
+                                'disproportionately influences police shootings')
+
+
+                ]
+
+            ),
